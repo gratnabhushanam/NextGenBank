@@ -1,8 +1,15 @@
 const { Sequelize } = require('sequelize');
 
-// Create a Sequelize instance connecting to the local MySQL database
-const sequelize = new Sequelize('bankingsystem', 'root', 'Ratna@2005', {
-  host: 'localhost',
+require('dotenv').config();
+
+const dbName = process.env.DB_NAME || 'bankingsystem';
+const dbUser = process.env.DB_USER || 'root';
+const dbPass = process.env.DB_PASS || 'Ratna@2005';
+const dbHost = process.env.DB_HOST || 'localhost';
+
+// Create a Sequelize instance connecting to the MySQL database
+const sequelize = new Sequelize(dbName, dbUser, dbPass, {
+  host: dbHost,
   dialect: 'mysql',
   logging: false, // Set to console.log to see SQL queries
 });
