@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+.env.*
+
+# Build output
+client/dist/
+
+# Uploads directory
+server/uploads/
+
+# IDE files
+.vscode/
+.idea/
+
+# Mac OS files
+.DS_Store
