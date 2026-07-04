@@ -44,7 +44,7 @@ const OpenAccount = () => {
     e.preventDefault();
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const res = await axios.post('http://localhost:5000/api/accounts', {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/accounts`, {
         holderName: user.name,
         email: user.email,
         phone: formData.phone,

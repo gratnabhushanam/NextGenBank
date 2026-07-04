@@ -34,7 +34,7 @@ const Profile = () => {
           'Content-Type': 'multipart/form-data'
         } 
       };
-      await axios.post('http://localhost:5000/api/upload/kyc', data, config);
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/upload/kyc`, data, config);
       setMessage('KYC Document uploaded successfully. Verification is pending.');
       setKycFile(null);
     } catch (err) {

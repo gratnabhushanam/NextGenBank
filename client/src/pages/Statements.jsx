@@ -17,7 +17,7 @@ const Statements = () => {
       setLoading(true);
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       // Using the paginated endpoint we created
-      const res = await axios.get(`http://localhost:5000/api/transactions?page=${pageNum}&limit=10`, config);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/transactions?page=${pageNum}&limit=10`, config);
       
       setTransactions(res.data.data);
       setTotalPages(res.data.pages);

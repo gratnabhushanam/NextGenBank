@@ -20,7 +20,7 @@ const TransactionModal = ({ show, onClose, type, accounts, onSuccess }) => {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const endpoint = type === 'Deposit' ? '/api/accounts/deposit' : '/api/accounts/withdraw';
       
-      await axios.post(`http://localhost:5000${endpoint}`, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${endpoint}`, {
         accountNumber,
         amount: Number(amount)
       }, config);

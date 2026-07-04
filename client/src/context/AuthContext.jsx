@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (identifier, password) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { identifier, password });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/login`, { identifier, password });
       setUser(res.data);
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       return res.data;
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, phone, password) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', { name, email, phone, password });
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/register`, { name, email, phone, password });
       setUser(res.data);
       localStorage.setItem('userInfo', JSON.stringify(res.data));
       return res.data;

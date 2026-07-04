@@ -18,8 +18,9 @@ const TransferModal = ({ show, onClose, accounts, onSuccess }) => {
       const fetchAllAccounts = async () => {
         try {
           const config = { headers: { Authorization: `Bearer ${user.token}` } };
-          const res = await axios.get('http://localhost:5000/api/accounts', config);
-          setAllAccounts(res.data);
+          const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/accounts`, config);
+          const accountsArray = res.data.data || res.data;
+          setAllAccounts(accountsArray);
         } catch (err) {
           console.error("Failed to fetch accounts");
         }
@@ -43,7 +44,7 @@ const TransferModal = ({ show, onClose, accounts, onSuccess }) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       
-      await axios.post('http://localhost:5000/api/accounts/transfer', {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/accounts/transfer`, {
         fromAccountNumber: fromAccount,
         toAccountNumber: toAccount,
         amount: Number(amount)

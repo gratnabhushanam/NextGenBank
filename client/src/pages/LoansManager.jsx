@@ -10,7 +10,7 @@ const LoansManager = () => {
   const fetchPendingLoans = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const res = await axios.get('http://localhost:5000/api/loans/pending', config);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/loans/pending`, config);
       setLoans(res.data);
     } catch (err) {
       console.error(err);
@@ -24,7 +24,7 @@ const LoansManager = () => {
   const handleStatusUpdate = async (id, status) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.put(`http://localhost:5000/api/loans/${id}`, { status }, config);
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/loans/${id}`, { status }, config);
       fetchPendingLoans();
     } catch (err) {
       alert(err.response?.data?.message || 'Error updating loan');
@@ -59,9 +59,9 @@ const LoansManager = () => {
                     <td className="fw-bold">{formatCurrency(loan.amount)}</td>
                     <td>{loan.durationMonths} months</td>
                     <td>
-                      {loan.panCardUrl && <a href={`http://localhost:5000${loan.panCardUrl}`} target="_blank" rel="noreferrer" className="d-block badge bg-info text-decoration-none mb-1">PAN Card</a>}
-                      {loan.aadhaarCardUrl && <a href={`http://localhost:5000${loan.aadhaarCardUrl}`} target="_blank" rel="noreferrer" className="d-block badge bg-info text-decoration-none mb-1">Aadhaar</a>}
-                      {loan.propertyDocUrl && <a href={`http://localhost:5000${loan.propertyDocUrl}`} target="_blank" rel="noreferrer" className="d-block badge bg-secondary text-decoration-none">Property Doc</a>}
+                      {loan.panCardUrl && <a href={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${loan.panCardUrl}`} target="_blank" rel="noreferrer" className="d-block badge bg-info text-decoration-none mb-1">PAN Card</a>}
+                      {loan.aadhaarCardUrl && <a href={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${loan.aadhaarCardUrl}`} target="_blank" rel="noreferrer" className="d-block badge bg-info text-decoration-none mb-1">Aadhaar</a>}
+                      {loan.propertyDocUrl && <a href={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${loan.propertyDocUrl}`} target="_blank" rel="noreferrer" className="d-block badge bg-secondary text-decoration-none">Property Doc</a>}
                       {!loan.panCardUrl && !loan.aadhaarCardUrl && <span className="text-muted small">No docs</span>}
                     </td>
                     <td>{new Date(loan.createdAt).toLocaleDateString()}</td>

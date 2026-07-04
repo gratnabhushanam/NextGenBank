@@ -20,7 +20,7 @@ const Loans = () => {
   const fetchLoans = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const res = await axios.get('http://localhost:5000/api/loans/my', config);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/loans/my`, config);
       setLoans(res.data);
     } catch (err) {
       console.error(err);
@@ -67,7 +67,7 @@ const Loans = () => {
         } 
       };
       
-      await axios.post('http://localhost:5000/api/loans', formData, config);
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/loans`, formData, config);
       
       setMessage('Loan application submitted successfully.');
       setAmount('');

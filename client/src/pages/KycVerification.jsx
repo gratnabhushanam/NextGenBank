@@ -11,7 +11,7 @@ const KycVerification = () => {
   const fetchDocuments = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const res = await axios.get('http://localhost:5000/api/upload/kyc/pending', config);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/upload/kyc/pending`, config);
       setDocuments(res.data);
     } catch (err) {
       setError('Failed to fetch pending KYC documents');
@@ -27,7 +27,7 @@ const KycVerification = () => {
   const handleVerify = async (id, status) => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.put(`http://localhost:5000/api/upload/kyc/${id}/verify`, { status }, config);
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/upload/kyc/${id}/verify`, { status }, config);
       
       // Remove from list
       setDocuments(documents.filter(doc => doc.id !== id));
@@ -57,12 +57,12 @@ const KycVerification = () => {
                   {/* Since it's a static file server on /uploads, we can show image or link */}
                   <div className="mb-3 text-center">
                     {doc.filePath.endsWith('.pdf') ? (
-                      <a href={`http://localhost:5000${doc.filePath}`} target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary">
+                      <a href={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${doc.filePath}`} target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary">
                         View PDF Document
                       </a>
                     ) : (
                       <img 
-                        src={`http://localhost:5000${doc.filePath}`} 
+                        src={`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${doc.filePath}`} 
                         alt="KYC Document" 
                         className="img-fluid rounded shadow-sm"
                         style={{ maxHeight: '250px', objectFit: 'cover' }}

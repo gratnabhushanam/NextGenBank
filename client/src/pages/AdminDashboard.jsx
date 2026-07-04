@@ -23,8 +23,8 @@ const AdminDashboard = () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
         const [statRes, accRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/admin/analytics', config),
-          axios.get('http://localhost:5000/api/accounts', config) // Assuming admin sees all
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/admin/analytics`, config),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/accounts`, config) // Assuming admin sees all
         ]);
         setAnalytics(statRes.data);
         // Handle pagination response format
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const endpoint = currentStatus === 'Active' ? 'freeze' : 'activate';
-      await axios.post(`http://localhost:5000/api/admin/accounts/${accountNumber}/${endpoint}`, {}, config);
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/admin/accounts/${accountNumber}/${endpoint}`, {}, config);
       
       // Update local state
       setAccounts(accounts.map(acc => 
@@ -158,7 +158,7 @@ const AdminDashboard = () => {
                 password: e.target.password.value,
                 role: e.target.role.value
               };
-              await axios.post('http://localhost:5000/api/auth/register', payload, config);
+              await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/auth/register`, payload, config);
               alert('Staff account created successfully!');
               e.target.reset();
             } catch (err) {

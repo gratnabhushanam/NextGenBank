@@ -34,12 +34,13 @@ const Dashboard = () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       const [accRes, txnRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/accounts', config),
-        axios.get('http://localhost:5000/api/transactions', config)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/accounts`, config),
+        axios.get(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/transactions`, config)
       ]);
       
       // Filter accounts for current user
-      const userAccounts = accRes.data.filter(a => a.email === user.email);
+      const accountsArray = accRes.data.data || accRes.data;
+      const userAccounts = accountsArray.filter(a => a.email === user.email);
       setAccounts(userAccounts);
 
       // If no accounts exist, redirect to Open Account flow
@@ -49,7 +50,8 @@ const Dashboard = () => {
 
       // Filter transactions
       const accountNumbers = userAccounts.map(a => a.accountNumber);
-      const userTxns = txnRes.data.filter(t => accountNumbers.includes(t.accountNumber));
+      const txnsArray = txnRes.data.data || txnRes.data;
+      const userTxns = txnsArray.filter(t => accountNumbers.includes(t.accountNumber));
       
       // Sort transactions by date descending
       userTxns.sort((a, b) => new Date(b.date) - new Date(a.date));

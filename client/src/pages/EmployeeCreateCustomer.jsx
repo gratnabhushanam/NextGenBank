@@ -36,7 +36,7 @@ const EmployeeCreateCustomer = () => {
     setSuccessData(null);
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const res = await axios.post('http://localhost:5000/api/accounts/employee-create', formData, config);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/accounts/employee-create`, formData, config);
       setSuccessData(res.data);
       setFormData({
         name: '', email: '', phone: '', password: '',
